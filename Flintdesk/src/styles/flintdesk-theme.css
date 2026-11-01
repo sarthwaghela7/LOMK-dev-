@@ -1,0 +1,1759 @@
+/*
+  FlintDesk theme layer — deep green / warm cream / muted gold.
+  Loaded after App.css. Tokens live in App.css :root; this file holds the shared
+  layout shell (compact header, sidebar, sticky filter region, action bar),
+  the button hierarchy, collapsible panels, compact tables and the login page.
+*/
+
+/* ---------- utilities ---------- */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- app shell: fixed header + sidebar, content scrolls ---------- */
+.page {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.topbar {
+  flex: 0 0 var(--header-h);
+  height: var(--header-h);
+  gap: 14px;
+  padding: 0 16px 0 18px;
+  border: 0;
+  border-bottom: 1px solid var(--green-900);
+  border-radius: 0;
+  background: var(--green-800);
+  color: var(--cream);
+  position: relative;
+  z-index: 40;
+}
+.brand {
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  color: var(--cream);
+}
+.brand:hover {
+  background: none;
+}
+.brand span,
+.page .brand span {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--cream);
+}
+.brand span.brand-flint,
+.page .brand span.brand-flint {
+  font-weight: 700;
+  color: #d8bf8c;
+}
+.topbar-user-actions {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.topbar .nm-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 243, 236, 0.22);
+  background: rgba(247, 243, 236, 0.06);
+  color: var(--cream);
+  font-size: 14px;
+}
+.topbar .nm-icon:hover,
+.topbar .nm-icon:active {
+  background: rgba(247, 243, 236, 0.16);
+  border-color: rgba(216, 191, 140, 0.6);
+}
+.topbar .profile-menu-wrap {
+  flex: 0 0 auto;
+}
+.notification-unread-dot {
+  top: 1px;
+  right: 1px;
+  background: var(--gold);
+  border-color: var(--green-800);
+}
+.notification-toast-stack {
+  top: calc(var(--header-h) + 10px);
+}
+.profile-popover {
+  top: calc(100% + 8px);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+}
+.profile-popover,
+.profile-popover * {
+  color: var(--text);
+}
+.profile-popover .muted {
+  color: var(--muted);
+}
+
+/* Context pill: dynamic "Welcome … working with number … extension …" */
+.context-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  height: 28px;
+  padding: 0 14px 0 10px;
+  border: 1px solid rgba(216, 191, 140, 0.45);
+  border-radius: 999px;
+  background: rgba(247, 243, 236, 0.08);
+  color: rgba(247, 243, 236, 0.86);
+  font-size: var(--fs-xs);
+  line-height: 1;
+  white-space: nowrap;
+}
+.context-pill-dot {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.context-pill-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.context-pill strong {
+  font-weight: 600;
+  color: #f1e3c3;
+}
+
+/* ---------- body / sidebar ---------- */
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+}
+.sidebar {
+  position: static;
+  top: auto;
+  width: var(--sidebar-w);
+  height: 100%;
+  max-height: none;
+  padding: 12px 10px;
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--surface);
+}
+.sidebar.collapsed {
+  width: 56px;
+  padding: 12px 8px;
+}
+.sidebar-heading {
+  margin-bottom: 8px;
+  padding: 0 4px 0 8px;
+}
+.sidebar-section-title,
+.page .sidebar-section-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+}
+.sidebar-toggle.nm-icon {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.sidebar-toggle.nm-icon:hover {
+  background: var(--selected);
+  color: var(--green-800);
+}
+.sidebar-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+.sidebar-nav {
+  gap: 2px;
+}
+.nm-nav-item {
+  position: relative;
+  gap: 11px;
+  padding: 0 10px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: var(--text-2);
+  text-align: left;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.nm-nav-item i {
+  flex: 0 0 18px;
+  width: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.nm-nav-item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nm-nav-item:hover {
+  background: var(--surface-2);
+  color: var(--green-800);
+}
+.nm-nav-item.active {
+  background: var(--selected);
+  color: var(--green-800);
+  font-weight: 600;
+}
+.nm-nav-item.active i {
+  color: var(--green-800);
+}
+.nm-nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 7px;
+  bottom: 7px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--gold);
+}
+.sidebar.collapsed .nm-nav-item.active::before {
+  left: -8px;
+}
+.nm-nav-item.nm-nav-item-compact span {
+  font-size: 13.5px;
+}
+.nm-nav-item:focus-visible,
+.collapsible-panel-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+/* ---------- content area (the only vertical scroller) ---------- */
+.content {
+  height: 100%;
+  min-width: 0;
+  gap: var(--space-section);
+  padding: 0 var(--space-page) var(--space-page);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-padding-top: 120px;
+  background: var(--cream);
+}
+.dashboard-content {
+  gap: var(--space-section);
+}
+.content > section {
+  min-width: 0;
+}
+.process-page,
+.settings-page,
+.visa-updates-page,
+.dashboard-v2 {
+  gap: var(--space-section);
+}
+.dashboard-v2 {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- headings: page titles removed, kept for assistive tech ---------- */
+.leads-heading h1,
+.calls-header-block h1,
+.calls-header-block > p,
+.calls-header-block > div > p,
+.todo-heading h1,
+.dashboard-v2-heading,
+.dashboard-heading,
+.visa-list-header > div:first-child {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.calls-header-block {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+}
+.calls-header-block:not(:has(button)) {
+  display: block;
+}
+.leads-heading {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+.todo-heading {
+  margin: 0;
+  justify-content: flex-end;
+}
+.dashboard-v2-header {
+  display: contents;
+}
+.visa-list-header {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  justify-content: flex-end;
+}
+
+/* Remaining headings: restrained editorial scale */
+.page h1 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+.page h2,
+.page .tasks-table-heading h2 {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--green-800);
+  letter-spacing: 0.1px;
+}
+.dashboard-v2-section-heading h2 {
+  font-size: 18px;
+}
+.page h1,
+.page h2 {
+  font-weight: 600;
+}
+
+/* ---------- sticky filter region (filter belt + action row) ---------- */
+.sticky-filter-region {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 calc(var(--space-page) * -1);
+  padding: var(--space-page) var(--space-page) 8px;
+  background: var(--cream);
+  box-shadow: 0 1px 0 var(--border);
+}
+.calls-filter-belt {
+  --calls-filter-control-width: 170px;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.filter-belt-container {
+  width: 100%;
+}
+.filter-belt-scroll-guidance {
+  margin: 0 0 3px;
+  min-height: 0;
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--muted);
+}
+.calls-toolbar-label,
+.page .calls-toolbar-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--muted);
+}
+.date-input {
+  height: 36px;
+  padding: 0 10px;
+  border-radius: var(--radius-input);
+  background: var(--input-bg);
+  border-color: var(--border-strong);
+}
+.date-input:focus-within {
+  border-color: var(--green-800);
+  box-shadow: 0 0 0 2px rgba(176, 141, 87, 0.28);
+}
+.calls-filter-belt input:not([type="radio"]),
+.calls-filter-belt select {
+  min-height: 36px;
+  height: 36px;
+  border-radius: var(--radius-input);
+  background: var(--input-bg);
+  border-color: var(--border-strong);
+  font-size: var(--fs-sm);
+}
+.calls-filter-belt input:not([type="radio"]):focus-visible,
+.calls-filter-belt select:focus-visible {
+  outline: 2px solid rgba(176, 141, 87, 0.5);
+  outline-offset: 0;
+  border-color: var(--green-800);
+}
+
+/* The Calls "Filters" belt (second belt) looks like the top belt: same outline, radius, shadow, controls and labels. */
+.calls-belt-panel {
+  --calls-filter-control-width: 170px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.calls-belt-panel select {
+  min-height: 36px;
+  height: 36px;
+  border-radius: var(--radius-input);
+  background: var(--input-bg);
+  border-color: var(--border-strong);
+  font-size: var(--fs-sm);
+}
+.calls-belt-panel select:focus-visible {
+  outline: 2px solid rgba(176, 141, 87, 0.5);
+  outline-offset: 0;
+  border-color: var(--green-800);
+}
+.calls-belt-panel .calls-belt-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--muted);
+}
+
+/* Action row: right-aligned, belongs to the belt; Apply is always last */
+.filter-belt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+.filter-belt-actions .calls-toolbar-apply {
+  order: 99;
+}
+.filter-belt-actions .unanswered-calls-toggle,
+.filter-belt-actions.unanswered-calls-toggle {
+  justify-content: flex-end;
+}
+
+/* ---------- button hierarchy ---------- */
+/* Primary: deep green */
+.primary-button,
+.table-action.primary,
+.calls-toolbar-apply.primary-button {
+  min-height: 34px;
+  padding: 0 16px;
+  border: 1px solid var(--green-800);
+  border-radius: var(--radius-btn);
+  background: var(--green-800);
+  color: var(--cream);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  box-shadow: none;
+}
+.primary-button:hover:not(:disabled),
+.table-action.primary:hover:not(:disabled) {
+  background: var(--green-700);
+  border-color: var(--green-700);
+}
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.calls-toolbar-apply.primary-button {
+  min-width: 84px;
+}
+.primary-button:focus-visible,
+.calls-toolbar-apply.primary-button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.primary-button.danger-button {
+  background: var(--error);
+  border-color: var(--error);
+}
+
+/* Secondary: surface with green border/text */
+.table-action {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--green-800);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.table-action:hover:not(:disabled) {
+  background: var(--selected);
+  border-color: var(--green-800);
+}
+.table-action.primary {
+  color: var(--cream);
+}
+.filter-belt-actions .table-action,
+.filter-belt-actions .leads-add-button,
+.filter-belt-actions .calls-export-button,
+.leads-add-button {
+  height: 34px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--green-800);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--green-800);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.filter-belt-actions .table-action:hover:not(:disabled),
+.leads-add-button:hover {
+  background: var(--selected);
+}
+.table-action.danger-button {
+  color: var(--error);
+}
+.data-filter-toggle.active,
+.filter-belt-actions .table-action.active,
+.calls-stage-view-tabs .table-action.active {
+  background: var(--green-800);
+  border-color: var(--green-800);
+  color: var(--cream);
+}
+.calls-export-button i {
+  color: var(--success);
+}
+
+/* Special / analytical: muted gold treatment */
+.calls-priority-button,
+.calls-lead-metrics-icon {
+  height: 34px;
+  border: 1px solid #d3bd8c;
+  border-radius: var(--radius-btn);
+  background: var(--gold-soft);
+  color: var(--green-800);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.calls-priority-button {
+  padding: 0 14px;
+}
+.calls-lead-metrics-icon {
+  width: 34px;
+  padding: 0;
+}
+.calls-priority-button:hover,
+.calls-lead-metrics-icon:hover,
+.calls-lead-metrics-icon:focus-visible {
+  outline: 0;
+  border-color: var(--gold);
+  background: #ead9b6;
+}
+.calls-priority-button.active {
+  border-color: var(--green-800);
+  background: var(--green-800);
+  color: var(--cream);
+}
+
+/* Status segmented filter buttons keep their semantic colours; just tighten */
+.status-filter-btn {
+  border-radius: var(--radius-btn);
+}
+
+/* ---------- collapsible instruction / note panels ---------- */
+.collapsible-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  overflow: hidden;
+}
+.collapsible-panel.tone-info {
+  border-left: 3px solid var(--green-800);
+}
+.collapsible-panel.tone-warning {
+  border-left: 3px solid var(--gold);
+  background: #fdfaf2;
+}
+.collapsible-panel-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--green-800);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.collapsible-panel-toggle:hover {
+  background: var(--surface-2);
+}
+.collapsible-panel-chevron {
+  font-size: 10px;
+  color: var(--muted);
+  transition: transform 0.18s ease;
+}
+.collapsible-panel.is-open .collapsible-panel-chevron {
+  transform: rotate(90deg);
+}
+.collapsible-panel-icon {
+  font-size: 12px;
+  color: var(--gold);
+}
+.collapsible-panel-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+.collapsible-panel.is-open > .collapsible-panel-body {
+  grid-template-rows: 1fr;
+}
+.collapsible-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 14px;
+  line-height: 1.5;
+}
+.collapsible-panel.is-open .collapsible-panel-inner {
+  padding: 4px 14px 12px;
+}
+.collapsible-panel-inner ul,
+.collapsible-panel-inner ol {
+  margin: 0;
+  padding-left: 20px;
+}
+.collapsible-panel-inner p {
+  margin: 0 0 6px;
+}
+.collapsible-panel-lead {
+  color: var(--muted);
+}
+/* Neutralise the legacy standalone panel chrome now that the wrapper owns it */
+.collapsible-panel.call-records-usage-guide,
+.collapsible-panel.calls-completion-note,
+.collapsible-panel.lead-ownership-notice,
+.collapsible-panel.tasks-assignment-instruction,
+.collapsible-panel.missed-calls-repeat-note,
+.collapsible-panel.dashboard-call-kpi-note {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+  box-shadow: none;
+}
+.collapsible-panel.tone-info {
+  background: var(--surface);
+}
+.collapsible-panel.tone-warning {
+  background: #fdfaf2;
+}
+.collapsible-panel .call-records-usage-guide-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px 18px;
+}
+.collapsible-panel .call-records-usage-guide-section h3 {
+  margin: 0 0 4px;
+  font-size: var(--fs-sm);
+  color: var(--green-800);
+}
+
+/* ---------- cards, tables, compact density ---------- */
+.upload-card,
+.queue-card,
+.settings-card,
+.recent-calls,
+.history-table-card,
+.agents-card,
+.date-filter,
+.data-filter-panel {
+  border-radius: var(--radius-card);
+  border-color: var(--border);
+}
+.upload-card,
+.queue-card {
+  padding: 16px;
+}
+.calls-table-wrap {
+  margin-top: 0;
+  max-height: calc(100dvh - var(--header-h) - 150px);
+  min-height: 280px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  scroll-padding-top: 44px;
+}
+/* Calls table (.calls-priority-table) keeps its own fixed column widths and
+   frozen-column offsets (see Calls.jsx), so only colours are themed there;
+   padding/typography overrides apply to the other tables. */
+.calls-table:not(.calls-priority-table) th,
+.page .calls-table:not(.calls-priority-table) th {
+  padding: 7px 10px;
+  font-size: 11px;
+}
+.calls-table:not(.calls-priority-table) td,
+.page .calls-table:not(.calls-priority-table) td {
+  padding: 5px 10px;
+  font-size: var(--fs-sm);
+}
+.calls-table th,
+.page .calls-table th {
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border-strong);
+}
+.calls-table thead th {
+  background: var(--surface-2);
+}
+.calls-table td,
+.page .calls-table td {
+  border-bottom: 1px solid var(--border);
+}
+.calls-table tbody tr:hover td {
+  background-color: #faf6ee;
+}
+.calls-table:not(.calls-priority-table) thead tr.calls-table-group-row + tr th {
+  top: 31px;
+}
+.page .table-scroll-outer {
+  min-width: 0;
+}
+
+/* ---------- login ---------- */
+.login-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cream);
+  /* extremely subtle paper grain */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.16  0 0 0 0 0.15  0 0 0 0.035 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.login-card {
+  width: min(540px, 100%);
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 50px rgba(20, 42, 40, 0.14);
+}
+.login-illustration {
+  position: relative;
+  padding: 22px 24px 0;
+  min-height: 0;
+  background: var(--green-800);
+  color: var(--cream);
+  gap: 0;
+}
+.login-illustration::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+}
+.login-logo {
+  align-self: center;
+  margin: 0 0 10px;
+}
+.login-logo span,
+.page .login-logo span {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
+  color: var(--cream);
+}
+.login-logo span b {
+  font-weight: 500;
+  color: var(--cream);
+}
+.login-logo-flint {
+  color: #d8bf8c;
+}
+.login-illustration-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: clamp(210px, 38vh, 330px);
+  object-fit: contain;
+  /* the artwork's black field melts into the green panel; the mask feathers
+     its edges so no rectangle shows */
+  mix-blend-mode: lighten;
+  filter: saturate(0.72) sepia(0.28);
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 55%, transparent 100%);
+}
+.login-form-panel {
+  padding: 28px 40px 34px;
+  align-items: stretch;
+  text-align: center;
+}
+.login-form-panel h1 {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--green-800);
+}
+.login-subtitle {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: var(--fs-md);
+}
+.login-form {
+  gap: 14px;
+  text-align: left;
+}
+.login-field .date-input {
+  height: 46px;
+  padding: 0 14px;
+  border-radius: var(--radius-input);
+  background: var(--input-bg);
+  border: 1px solid var(--border-strong);
+}
+.login-field .date-input i {
+  color: var(--muted);
+}
+.login-field input {
+  font-size: 15px;
+}
+.login-eye-toggle {
+  color: var(--muted);
+}
+.login-eye-toggle:hover {
+  color: var(--green-800);
+}
+.login-error {
+  background: #fdf1ef;
+  border-color: #efc9c3;
+  color: var(--error);
+  border-radius: var(--radius-input);
+}
+.login-submit.primary-button {
+  height: 46px;
+  min-height: 46px;
+  margin-top: 4px;
+  border-radius: var(--radius-btn);
+  font-size: 15px;
+  letter-spacing: 0.4px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-w: 196px;
+  }
+  .context-pill {
+    max-width: 52vw;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Sidebar becomes an icon rail on small screens */
+  .sidebar,
+  .sidebar.collapsed {
+    width: 52px;
+    padding: 10px 6px;
+  }
+  .sidebar .sidebar-section-title,
+  .sidebar .nm-nav-item span,
+  .sidebar .sidebar-toggle {
+    display: none;
+  }
+  .sidebar .sidebar-heading {
+    display: none;
+  }
+  .sidebar .nm-nav-item {
+    justify-content: center;
+    padding-inline: 0;
+  }
+  .sidebar .nm-nav-item.active::before {
+    left: -6px;
+  }
+  .topbar {
+    padding: 0 10px 0 12px;
+    gap: 8px;
+  }
+  .brand {
+    font-size: 22px;
+  }
+  .context-pill {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+  .content {
+    padding: 0 10px 12px;
+  }
+  .sticky-filter-region {
+    margin: 0 -10px;
+    padding: 10px 10px 6px;
+  }
+  .filter-belt-actions {
+    gap: 6px;
+  }
+  .filter-belt-actions .table-action,
+  .filter-belt-actions .calls-priority-button,
+  .filter-belt-actions .leads-add-button,
+  .filter-belt-actions .primary-button {
+    padding-inline: 10px;
+  }
+  .calls-table-wrap {
+    max-height: calc(100dvh - var(--header-h) - 190px);
+  }
+  .login-form-panel {
+    padding: 24px 22px 28px;
+  }
+  .login-illustration-image {
+    height: clamp(150px, 24vh, 210px);
+  }
+}
+
+@media (max-width: 480px) {
+  .context-pill-text {
+    font-size: 11px;
+  }
+  .login-page {
+    padding: 12px;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsible-panel-body,
+  .collapsible-panel-chevron {
+    transition: none;
+  }
+}
+
+/* ---------- nested-control fixes (inputs living inside .date-input shells) ---------- */
+.calls-filter-belt .date-input input,
+.calls-filter-belt .date-input select,
+.calls-filter-belt .calls-toolbar-select select {
+  min-height: 0;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: 0;
+}
+.calls-toolbar-select {
+  height: 36px;
+}
+.recent-calls,
+.history-table-card,
+.agents-card {
+  padding: 14px 16px;
+}
+.recent-calls > h2,
+.history-table-card > h2 {
+  margin: 0 0 4px;
+}
+
+/* Belts stay a single horizontally-scrolling row at every width (the legacy
+   ≤1024px rule stacked them vertically, which can't work with a sticky belt). */
+.calls-filter-belt,
+.dependencies-filter-belt {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.calls-filter-belt > * {
+  flex: 0 0 auto;
+}
+@media (max-width: 1024px) {
+  .calls-filter-belt,
+  .dependencies-filter-belt {
+    flex-direction: row;
+    align-items: flex-end;
+    overflow-x: auto;
+  }
+  .calls-filter-group {
+    flex-wrap: nowrap;
+  }
+  .calls-toolbar {
+    width: auto;
+    flex-wrap: nowrap;
+  }
+  .calls-date-toolbar {
+    width: auto;
+  }
+}
+
+.tasks-add-pill {
+  height: 34px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--green-800);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--green-800);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+.tasks-add-pill:hover {
+  background: var(--selected);
+}
+
+/* Calls: first column (checkbox + copy + "More logs") follows the same compact
+   rule as the Submit / Mark completed / Edit row: 28px controls, 4px gap, 11px text */
+.calls-priority-table [data-call-selection-column] {
+  padding-left: 8px;
+  padding-right: 4px;
+  box-sizing: border-box;
+  width: var(--calls-selection-width, 66px);
+  min-width: var(--calls-selection-width, 66px);
+  max-width: var(--calls-selection-width, 66px);
+}
+.calls-priority-table .calls-selection-cell {
+  gap: 4px;
+}
+.calls-priority-table .calls-selection-cell .icon-action-btn {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  padding: 0;
+  border-radius: var(--radius-btn);
+}
+.calls-priority-table .calls-selection-cell .calls-more-logs-btn {
+  min-height: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: var(--radius-btn);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Case Types + EQ: smaller, calmer type (was 14–16px, pure black) */
+.case-types-eq-card {
+  border-radius: var(--radius-card);
+}
+.case-types-eq-table th {
+  padding: 9px 14px;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+.case-types-eq-table td {
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.case-types-eq-table th:nth-child(2),
+.case-types-eq-table .case-type-visa-cell {
+  color: var(--green-800);
+  font-size: 13px;
+  font-weight: 600;
+}
+.case-types-eq-table .case-type-week-cell strong {
+  color: var(--text);
+  font-size: 13px;
+}
+.case-types-eq-table .case-type-week-cell span {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.case-types-eq-table .case-type-week-cell {
+  padding: 10px 14px;
+}
+.case-types-eq-table .case-type-questions-cell {
+  padding: 8px 14px;
+  color: var(--text);
+}
+.case-types-eq-table .case-type-questions-cell > span,
+.case-types-eq-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Firm logo, top-left of the login page. multiply drops the logo's white square onto the cream page. */
+.login-page {
+  position: relative;
+}
+.login-firm-logo {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  width: 128px;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+@media (max-width: 768px) {
+  .login-firm-logo {
+    top: 8px;
+    left: 12px;
+    width: 88px;
+  }
+}
+@media (max-width: 480px) {
+  .login-page {
+    padding-top: 100px;
+  }
+}
+
+/* =====================================================================
+   Pass 2 — Calls table
+   ===================================================================== */
+
+/* Calls fills the viewport: the table scrolls inside its card, so the header
+   (both rows) stays pinned for as long as the user is looking at records. */
+.calls-fill-page {
+  /* Grows with its content so the page (.content) can scroll past the
+     filters; the table below is a fixed viewport-tall box of its own. */
+  height: auto;
+  min-height: 0;
+}
+.calls-records-card {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* The card is a flex column, so child margins add up instead of collapsing:
+   .muted (14px bottom) + .result-count (24px top) left a 38px hole under the
+   title. Keep the title, date format and count close together. */
+.calls-records-card > h2 {
+  margin: 0 0 2px;
+}
+.calls-records-card > .muted {
+  margin: 0 0 6px;
+}
+.calls-records-card > .result-count {
+  margin: 0 0 8px;
+}
+.calls-records-card > .table-scroll-outer {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Page scroll: .content is the vertical scroller, and the table scrolls in
+     its own box inside it. Once that box reaches the top of .content it stays
+     pinned there (with both header rows) until the card ends, instead of
+     scrolling away with the page. */
+  position: sticky;
+  top: var(--sticky-filter-h, 0px);
+  /* Reserve the pagination's height so the pinned table stops above it
+     instead of sliding down over it (the pagination below pulls up by the
+     same amount, so the resting layout is unchanged). */
+  margin-bottom: 60px;
+}
+.calls-records-card > .table-scroll-outer + .table-pagination {
+  margin-top: -60px;
+  position: relative;
+}
+.calls-records-card > .table-scroll-outer > .calls-table-wrap {
+  flex: 0 0 auto;
+  /* Content-sized for a few rows; a full page scrolls inside the box. "Big view": the box now takes almost all the room left
+     under the filters (it used to leave 100px of slack) and never gets shorter than 520px, however tall the filters are, so a
+     small window still shows several rows (the page itself scrolls instead). */
+  height: auto;
+  max-height: max(calc(100dvh - var(--header-h) - var(--sticky-filter-h, 74px) - 64px), 520px);
+  min-height: 0;
+  overscroll-behavior-y: auto;
+}
+/* Short window: the pinned filters + the table box do not both fit under the top bar. Let the filters scroll away like normal
+   content and pin the table (its box and both header rows) right under the top bar, using the whole window height; the
+   box is shortened by the pagination row and page padding so its last rows are never pushed behind the top bar. */
+[data-sticky-fits="no"] .sticky-filter-region { position: static; }
+[data-sticky-fits="no"] .calls-records-card > .table-scroll-outer { top: 0; }
+[data-sticky-fits="no"] .calls-records-card > .table-scroll-outer > .calls-table-wrap {
+  max-height: max(calc(100dvh - var(--header-h) - 92px), 280px);
+}
+/* The "All logs of phone number" popup keeps a bounded table. */
+.all-phone-logs-modal .calls-table-wrap {
+  max-height: 60vh;
+}
+
+/* Two-row sticky header: fixed row heights so row 2 pins exactly below row 1 */
+.calls-priority-table thead tr.calls-table-group-row th {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  height: 30px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  line-height: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  background-clip: padding-box;
+}
+.calls-priority-table thead tr.calls-table-group-row + tr th {
+  position: sticky;
+  top: 30px;
+  z-index: 7;
+  box-shadow: 0 1px 0 var(--border-strong);
+  background-clip: padding-box;
+}
+.calls-priority-table thead [data-call-sticky-column] {
+  z-index: 9;
+}
+.calls-priority-table thead [data-call-selection-column] {
+  z-index: 10;
+}
+.calls-priority-table thead tr.calls-table-group-row th[data-call-sticky-group] {
+  z-index: 9;
+}
+
+/* First column header: "Copy / Repeated Logs" */
+.calls-selection-header {
+  padding: 4px 6px !important;
+  text-align: center !important;
+  /* The column can be as narrow as 66px: let the label wrap inside it instead of spilling into the next column. */
+  white-space: normal !important;
+  overflow: hidden;
+}
+.calls-selection-header-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.calls-selection-header-label span {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-2);
+}
+
+/* Date divider: a clear rule where one calendar day ends and the next begins */
+.calls-table tbody tr.calls-date-boundary > td {
+  border-top: 2px solid var(--gold);
+}
+
+/* Call Records header groups: the group header and its column headers share
+   one colour. Colours are tokens in App.css :root. */
+.calls-table-expanded .calls-table-group-row .group-stage1 {
+  background: var(--stage1-group);
+  color: var(--stage1-group-ink);
+  border-bottom-color: var(--stage1-group-line);
+}
+.calls-table-expanded .stage1-column-header {
+  background: var(--stage1-column);
+  color: var(--stage1-column-ink);
+}
+.calls-table-expanded .calls-table-group-row .group-stage2 {
+  background: var(--stage2-group);
+  color: var(--stage2-group-ink);
+  border-bottom-color: var(--stage2-group-line);
+}
+.calls-table-expanded .stage2-column-header {
+  background: var(--stage2-column);
+  color: var(--stage2-column-ink);
+}
+.calls-table-expanded .calls-table-group-row .group-stage3 {
+  background: var(--stage3-group);
+  color: var(--stage3-group-ink);
+  border-bottom-color: var(--stage3-group-line);
+}
+.calls-table-expanded .stage3-column-header {
+  background: var(--stage3-column);
+  color: var(--stage3-column-ink);
+}
+.calls-table-expanded .calls-table-group-row .group-stage4 {
+  background: var(--stage4-group);
+  color: var(--stage4-group-ink);
+  border-bottom-color: var(--stage4-group-line);
+}
+.calls-table-expanded .stage4-column-header {
+  background: var(--stage4-column);
+  color: var(--stage4-column-ink);
+}
+.calls-table-expanded .stage1-column-header,
+.calls-table-expanded .stage2-column-header,
+.calls-table-expanded .stage3-column-header,
+.calls-table-expanded .stage4-column-header {
+  border-bottom: 1px solid var(--border-strong);
+  border-right: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+}
+.calls-table-expanded .calls-table-group-row th {
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* =====================================================================
+   Pass 2 — Missed Calls
+   ===================================================================== */
+
+/* Hannah AI = light mint, Called Back = deep green; the active one gets a gold ring */
+.calls-stage-view-tabs .table-action.missed-view-tab {
+  height: 34px;
+  padding: 0 16px;
+  font-weight: 600;
+  transition: background 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+.calls-stage-view-tabs .table-action.missed-view-hannah {
+  background: #dcefe2;
+  border-color: #a9cdb7;
+  color: #1f4d33;
+  opacity: 0.8;
+}
+.calls-stage-view-tabs .table-action.missed-view-hannah:hover:not(:disabled) {
+  background: #cbe5d4;
+  border-color: #8dbba0;
+  opacity: 1;
+}
+.calls-stage-view-tabs .table-action.missed-view-hannah.active {
+  background: #cbe5d4;
+  border-color: #6fa88a;
+  color: #15381f;
+  opacity: 1;
+  box-shadow: 0 0 0 2px var(--gold);
+}
+.calls-stage-view-tabs .table-action.missed-view-called-back {
+  background: #2f6b4a;
+  border-color: #2f6b4a;
+  color: #f1f7f3;
+  opacity: 0.8;
+}
+.calls-stage-view-tabs .table-action.missed-view-called-back:hover:not(:disabled) {
+  background: #245539;
+  border-color: #245539;
+  opacity: 1;
+}
+.calls-stage-view-tabs .table-action.missed-view-called-back.active {
+  background: #1f4d33;
+  border-color: #1f4d33;
+  color: #fff;
+  opacity: 1;
+  box-shadow: 0 0 0 2px var(--gold);
+}
+.calls-stage-view-tabs .table-action.missed-view-tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.missed-calls-table thead th.missed-calls-header-hannah {
+  background: #dcefe2;
+  color: #1f4d33;
+}
+.missed-calls-table thead th.missed-calls-header-called-back {
+  background: #cfe3d6;
+  color: #15381f;
+}
+
+/* Caller's Number cell: number + Repeated badge + category label wrap cleanly */
+.missed-calls-table .missed-calls-number-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 6px;
+  max-width: 100%;
+}
+.calls-table tbody td > .missed-calls-agent-cell:not(.status) {
+  max-width: 100%;
+  min-width: 0;
+}
+.missed-calls-table .missed-calls-agent-cell .status {
+  display: inline-block;
+  max-width: 100%;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+  text-align: center;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================================
+   Pass 2 — Todo board: content-driven columns
+   ===================================================================== */
+.todo-page {
+  min-height: 0;
+  padding-bottom: 76px; /* clears the floating add button */
+  overflow-x: auto;
+}
+.todo-board {
+  align-items: stretch;      /* columns grow together with the tallest one */
+  grid-auto-rows: auto;
+  gap: 12px;
+}
+.todo-column {
+  min-height: 160px;         /* just enough for the header + empty state */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+}
+.todo-column > header {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: var(--selected);
+}
+.todo-card-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;         /* never clip a card */
+}
+.todo-card {
+  flex: 0 0 auto;            /* cards keep their natural height */
+  border-radius: var(--radius-card);
+}
+
+/* =====================================================================
+   Pass 2 — Case Types + EQ table: header -> details hierarchy
+   ===================================================================== */
+.case-types-eq-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.case-types-eq-table-scroll {
+  max-height: calc(100dvh - var(--header-h) - 190px);
+  min-height: 200px;
+  overflow: auto;
+}
+.case-types-eq-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+.case-types-eq-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 9px 14px;
+  background: var(--green-800);
+  color: var(--cream);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-align: left;
+  border: 0;
+  border-right: 1px solid rgba(247, 243, 236, 0.14);
+}
+.case-types-eq-table thead th:nth-child(1) { width: 200px; }
+.case-types-eq-table thead th:nth-child(2) { width: 200px; }
+.case-types-eq-table tbody td {
+  padding: 8px 14px;
+  vertical-align: top;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+.case-types-eq-table tbody td:last-child {
+  border-right: 0;
+}
+/* a new week starts: heavier rule */
+.case-types-eq-table tbody tr:has(.case-type-week-cell) > td {
+  border-top: 2px solid var(--border-strong);
+}
+.case-types-eq-table tbody tr:first-child:has(.case-type-week-cell) > td {
+  border-top: 0;
+}
+.case-types-eq-table .case-type-week-cell {
+  width: auto;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border-strong);
+}
+.case-types-eq-table tbody td.case-type-visa-cell {
+  width: auto;
+  text-align: left;
+  font-weight: 600;
+  color: var(--green-800);
+  /* Case types come from the AI analysis and can be long labels: wrap them inside the cell instead of running
+     over the question text next to it. */
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.case-types-eq-table .case-type-questions-cell {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+.case-types-eq-table .case-type-questions-cell div + div {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border);
+}
+.case-types-eq-table thead th,
+.case-types-eq-table thead th:nth-child(n) {
+  color: var(--cream);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-align: left;
+}
+.calls-fill-page > * {
+  flex-shrink: 0;
+}
+.calls-fill-page > .calls-records-card {
+  flex-shrink: 1;
+}
+.case-types-eq-card .case-types-eq-table thead th,
+.case-types-eq-card .case-types-eq-table thead th:nth-child(n) {
+  background: var(--green-800);
+  color: var(--cream);
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 2px solid var(--gold);
+}
+.case-types-eq-card .case-types-eq-table tbody td.case-type-week-cell {
+  vertical-align: top;
+  padding-top: 10px;
+}
+/* the shared .date-category-table header rules are very specific; this table
+   is scoped to the Case Types + EQ card only */
+.case-types-eq-card .case-types-eq-table thead th,
+.case-types-eq-card .case-types-eq-table thead tr th:first-child {
+  background: var(--green-800) !important;
+  color: var(--cream) !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  text-align: left !important;
+}
+
+/* z-order of frozen header cells must beat the generic header rule above */
+.calls-priority-table thead tr.calls-table-group-row + tr th[data-call-sticky-column] {
+  z-index: 9;
+}
+.calls-priority-table thead tr.calls-table-group-row + tr th[data-call-selection-column] {
+  z-index: 11;
+}
+
+/* =====================================================================
+   Pass 2 — Dashboard Performance Ranking: one clean left-aligned grid
+   ===================================================================== */
+.ranking-table-card {
+  margin-left: 0;
+  margin-right: auto;
+}
+.ranking-table-card .ranking-table th,
+.ranking-table-card .ranking-table td,
+.ranking-table-card .ranking-table .date-category-title-row th,
+.ranking-table-card .ranking-table .date-category-agent-total-row th {
+  text-align: left !important;
+  padding: 6px 10px;
+}
+.ranking-table-card .ranking-table th:first-child,
+.ranking-table-card .ranking-table td:first-child {
+  width: 12%;
+}
+
+/* Call and Call details groups (the frozen columns set their own header
+   backgrounds, hence !important). */
+.calls-table-expanded.calls-priority-table thead th.group-call {
+  background: var(--call-group) !important;
+  color: var(--call-group-ink);
+  border-bottom-color: var(--call-group-line);
+}
+.calls-table-expanded.calls-priority-table thead th.col-call {
+  background: var(--call-column) !important;
+  color: var(--call-column-ink);
+}
+.calls-table-expanded.calls-priority-table thead th.group-details {
+  background: var(--call-details-group) !important;
+  color: var(--call-details-group-ink);
+  border-bottom-color: var(--call-details-group-line);
+}
+.calls-table-expanded.calls-priority-table thead th.col-details {
+  background: var(--call-details-column) !important;
+  color: var(--call-details-column-ink);
+}
+
+/* Case Types + EQ: keep the "Month & Date" column in view while the table
+   scrolls sideways. The scroll container is .case-types-eq-table-scroll, so
+   plain sticky positioning works; no scroll listeners. The header cell is
+   also sticky to the top, so it gets the highest z-index where the two meet. */
+.case-types-eq-card .case-types-eq-table thead tr th:first-child {
+  left: 0 !important;
+  z-index: 5 !important;
+  box-shadow: 1px 0 0 rgba(247, 243, 236, 0.18), 6px 0 8px -6px rgba(13, 31, 29, 0.35);
+}
+.case-types-eq-card .case-types-eq-table tbody td.case-type-week-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  box-shadow: 6px 0 8px -6px rgba(13, 31, 29, 0.22);
+}
+/* Narrow screens: a slimmer frozen column so it does not eat the viewport. */
+@media (max-width: 640px) {
+  .case-types-eq-table {
+    min-width: 560px;
+  }
+  .case-types-eq-card .case-types-eq-table thead th:nth-child(1),
+  .case-types-eq-card .case-types-eq-table tbody td.case-type-week-cell {
+    width: 140px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* =====================================================================
+   Calls page - call records table header fixes (scoped to the Calls table:
+   .calls-table-expanded.calls-priority-table; Missed Calls shares only the
+   second class and is untouched)
+   ===================================================================== */
+
+/* 1. Each stage's column headers use that stage's own colour, like its group header above them. The generic
+   ".page .calls-table th" cream rule is more specific than the stage rules and was winning. */
+.calls-table-expanded.calls-priority-table thead th.stage1-column-header {
+  background: var(--stage1-column);
+  color: var(--stage1-column-ink);
+}
+.calls-table-expanded.calls-priority-table thead th.stage2-column-header {
+  background: var(--stage2-column);
+  color: var(--stage2-column-ink);
+}
+.calls-table-expanded.calls-priority-table thead th.stage3-column-header {
+  background: var(--stage3-column);
+  color: var(--stage3-column-ink);
+}
+.calls-table-expanded.calls-priority-table thead th.stage4-column-header {
+  background: var(--stage4-column);
+  color: var(--stage4-column-ink);
+}
+
+/* Follow Ups repeats the Calls table, so its headers are coloured the same way: the Call details group and columns, and each
+   stage's group header with its own column headers. (Team Lead Fills keeps its own purple.) */
+.calls-table-expanded.follow-ups-table thead th.group-call {
+  background: var(--call-group);
+  color: var(--call-group-ink);
+  border-bottom-color: var(--call-group-line);
+}
+.calls-table-expanded.follow-ups-table thead th.col-call,
+.calls-table-expanded.follow-ups-table thead th.col-call .calls-selection-header-label span {
+  background: var(--call-column);
+  color: #fff;
+}
+.calls-table-expanded.follow-ups-table thead th.col-call .calls-selection-header-label span { background: transparent; }
+.calls-table-expanded.follow-ups-table thead th.group-details {
+  background: var(--call-details-group);
+  color: var(--call-details-group-ink);
+  border-bottom-color: var(--call-details-group-line);
+}
+.calls-table-expanded.follow-ups-table thead th.col-details {
+  background: var(--call-details-column);
+  color: var(--call-details-column-ink);
+}
+.calls-table-expanded.follow-ups-table thead th.stage1-column-header {
+  background: var(--stage1-column);
+  color: var(--stage1-column-ink);
+}
+.calls-table-expanded.follow-ups-table thead th.stage2-column-header {
+  background: var(--stage2-column);
+  color: var(--stage2-column-ink);
+}
+.calls-table-expanded.follow-ups-table thead th.stage3-column-header {
+  background: var(--stage3-column);
+  color: var(--stage3-column-ink);
+}
+.calls-table-expanded.follow-ups-table thead th.stage4-column-header {
+  background: var(--stage4-column);
+  color: var(--stage4-column-ink);
+}
+
+/* 2. Every label in the rose "Call" header cells is white: Audio and the Copy / Repeated Logs label had their own
+   darker text colours. */
+.calls-table-expanded.calls-priority-table thead tr:not(.calls-table-group-row) th.col-call,
+.calls-table-expanded.calls-priority-table thead tr:not(.calls-table-group-row) th.col-call .calls-selection-header-label span {
+  color: #fff;
+}
+
+/* 3. Labels break only between words (never inside one). A single word such as Transcript keeps its own line and
+   its column is as wide as that word needs; "Enquiry Open Duration" wraps word by word. */
+.calls-table-expanded.calls-priority-table thead tr:not(.calls-table-group-row) th[data-call-sticky-column] {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+  padding-inline: 4px;
+  /* a little smaller so a whole word like TRANSCRIPT fits without making the frozen block much wider */
+  font-size: 10px;
+  letter-spacing: 0.2px;
+}
+.calls-table-expanded.calls-priority-table thead .calls-selection-header-label span {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* 4. The "Call" group label stays above the frozen Call columns while the table scrolls sideways (it used to scroll
+   away, leaving the next stage's header over them at the far right). It is as wide as those columns, which are
+   pinned at their real widths (see pinCallColumns in Calls.jsx), so the two always line up. */
+.calls-table-expanded.calls-priority-table thead tr.calls-table-group-row th[data-call-sticky-group="call"] {
+  position: sticky;
+  left: 0;
+  z-index: 9;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.28);
+}

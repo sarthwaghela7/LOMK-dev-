@@ -1,0 +1,17 @@
+fastapi==0.160.0
+uvicorn
+sqlalchemy>=2.0,<2.1
+psycopg2-binary
+python-dotenv
+pyjwt
+passlib[bcrypt]
+boto3
+imageio-ffmpeg
+pydantic[email]
+APScheduler==3.11.0
+pytz==2025.2
+requests
+tqdm==4.67.1
+python-multipart
+ tzdata
+google-auth>=2.30,<3

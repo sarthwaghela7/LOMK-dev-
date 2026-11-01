@@ -1,0 +1,12 @@
+{
+  "note": "Create exactly 15 entries in a private copy; never commit real credentials or client records.",
+  "users": [
+    {
+      "username": "test-agent-01@example.invalid",
+      "password": "replace-in-private-copy",
+      "call_id": "00000000-0000-0000-0000-000000000001",
+      "save": {"field": "fd_m_action_status", "value": "Load test", "expected_value": ""},
+      "import_records": [{"call_id": "00000000-0000-0000-0000-000000000001", "fd_m_action_status": "Load test import"}]
+    }
+  ]
+}

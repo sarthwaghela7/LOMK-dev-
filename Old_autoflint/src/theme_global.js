@@ -1,0 +1,92 @@
+export const THEME_GLOBAL = Object.freeze({
+  colors: {
+    bgBase: "#0d0d12",
+    bgSurface: "#18181f",
+    bgCard: "#20202a",
+    bgHover: "#2a2a35",
+    bgInput: "#1e1e28",
+    bgFilter: "#14141a",
+    border: "#2e2e3a",
+    borderLight: "#3e3e4e",
+    textPrimary: "#f5f5fa",
+    textSecondary: "#b0b0c0",
+    textMuted: "#6a6a80",
+    accent: "#e8e8f0",
+    accentDim: "rgba(232, 232, 240, 0.1)",
+    accentBorder: "rgba(232, 232, 240, 0.25)",
+    red: "#e85d5d",
+    redDim: "rgba(232, 93, 93, 0.15)",
+    green: "#5dd68a",
+    greenDim: "rgba(93, 214, 138, 0.15)",
+    yellow: "#e8c65d",
+    yellowDim: "rgba(232, 198, 93, 0.15)",
+  },
+  chart: {
+    grid: "#334155",
+    axis: "#94a3b8",
+    tooltipBg: "#1e293b",
+    tooltipBorder: "#334155",
+    tooltipLabel: "#e2e8f0",
+  },
+  report: {
+    answered: "#22c55e",
+    missed: "#ef4444",
+    voicemail: "#f59e0b",
+    complete: "#3b82f6",
+    incomplete: "#94a3b8",
+    primary: "#3b82f6",
+    secondary: "#8b5cf6",
+    accent: "#06b6d4",
+  },
+});
+
+export const REPORT_PIE_COLORS = Object.freeze([
+  THEME_GLOBAL.report.answered,
+  THEME_GLOBAL.report.missed,
+  THEME_GLOBAL.report.voicemail,
+  THEME_GLOBAL.report.complete,
+  THEME_GLOBAL.report.secondary,
+  THEME_GLOBAL.report.accent,
+]);
+
+const CSS_COLOR_VARIABLES = Object.freeze({
+  "--bg-base": THEME_GLOBAL.colors.bgBase,
+  "--bg-surface": THEME_GLOBAL.colors.bgSurface,
+  "--bg-card": THEME_GLOBAL.colors.bgCard,
+  "--bg-hover": THEME_GLOBAL.colors.bgHover,
+  "--bg-input": THEME_GLOBAL.colors.bgInput,
+  "--bg-filter": THEME_GLOBAL.colors.bgFilter,
+  "--border": THEME_GLOBAL.colors.border,
+  "--border-light": THEME_GLOBAL.colors.borderLight,
+  "--text-primary": THEME_GLOBAL.colors.textPrimary,
+  "--text-secondary": THEME_GLOBAL.colors.textSecondary,
+  "--text-muted": THEME_GLOBAL.colors.textMuted,
+  "--accent": THEME_GLOBAL.colors.accent,
+  "--accent-dim": THEME_GLOBAL.colors.accentDim,
+  "--accent-border": THEME_GLOBAL.colors.accentBorder,
+  "--red": THEME_GLOBAL.colors.red,
+  "--red-dim": THEME_GLOBAL.colors.redDim,
+  "--green": THEME_GLOBAL.colors.green,
+  "--green-dim": THEME_GLOBAL.colors.greenDim,
+  "--yellow": THEME_GLOBAL.colors.yellow,
+  "--yellow-dim": THEME_GLOBAL.colors.yellowDim,
+  "--chart-grid": THEME_GLOBAL.chart.grid,
+  "--chart-axis": THEME_GLOBAL.chart.axis,
+  "--chart-tooltip-bg": THEME_GLOBAL.chart.tooltipBg,
+  "--chart-tooltip-border": THEME_GLOBAL.chart.tooltipBorder,
+  "--chart-tooltip-label": THEME_GLOBAL.chart.tooltipLabel,
+  "--report-answered": THEME_GLOBAL.report.answered,
+  "--report-missed": THEME_GLOBAL.report.missed,
+  "--report-voicemail": THEME_GLOBAL.report.voicemail,
+  "--report-complete": THEME_GLOBAL.report.complete,
+  "--report-incomplete": THEME_GLOBAL.report.incomplete,
+  "--report-primary": THEME_GLOBAL.report.primary,
+  "--report-secondary": THEME_GLOBAL.report.secondary,
+  "--report-accent": THEME_GLOBAL.report.accent,
+});
+
+export function applyThemeGlobalColors(target = document.documentElement) {
+  Object.entries(CSS_COLOR_VARIABLES).forEach(([variable, value]) => {
+    target.style.setProperty(variable, value);
+  });
+}
